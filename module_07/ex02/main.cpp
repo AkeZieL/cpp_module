@@ -1,0 +1,74 @@
+#include "Array.hpp"
+
+template <typename T>
+void	compare(Array<T> &array1, Array<T> &array2) {
+	if (array1.size() != array2.size()) {
+		std::cout << "Les array ont une taille differentes" << std::endl;
+		return ;
+	}
+	for (size_t i = 0; i < array1.size(); i++){
+		if (array1[i] != array2[i]) {
+			std::cout << "Les array sont differents: array1[" << i << "] = " << array1[i] << " array2[" << i << "] = " << array2[i] << std::endl;
+			return ;
+		}
+	}
+	std::cout << "Les array sont identique" << std::endl;
+}
+
+int main(void)
+{
+	Array<int> numbers(MAX_VAL);
+	int* mirror = new int[MAX_VAL];
+	srand(time(NULL));
+	for (int i = 0; i < MAX_VAL; i++) {
+		const int value = rand();
+		numbers[i] = value;
+		mirror[i] = value;
+	}
+	//SCOPE
+	{
+		Array<int> tmp = numbers;
+		Array<int> test(tmp);
+	}
+
+	for (int i = 0; i < MAX_VAL; i++)
+	{
+		if (mirror[i] != numbers[i])
+		{
+			std::cerr << "didn't save the same value!!" << std::endl;
+			return 1;
+		}
+	}
+	try
+	{
+		numbers[-2] = 0;
+	}
+	catch(const std::exception& e)
+	{	
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		numbers[MAX_VAL] = 0;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+
+	for (int i = 0; i < MAX_VAL; i++)
+	{
+		numbers[i] = rand();
+	}
+	delete [] mirror;
+//
+	int * a = new int();
+	std::cout << std::endl << *a << std::endl;
+	delete a;
+//
+	Array<int> copy = numbers;
+	compare(copy, numbers);
+	copy[1] = 0;
+	compare(copy, numbers);
+    return 0;
+}
