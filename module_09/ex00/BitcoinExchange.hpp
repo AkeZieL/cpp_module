@@ -1,31 +1,33 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mbilly <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 15:24:07 by mbilly            #+#    #+#             */
-/*   Updated: 2024/03/07 15:41:14 by mbilly           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#pragma once
 
-#ifndef BITCOINEXCHANGE_HPP
-# define BITCOINEXCHANGE_HPP
+#include <iostream>
+#include <string>
+#include <map>
+#include <fstream>
+#include <vector>
+#include <sstream>
+#include <cctype>
+#include <iomanip>
+#include <cmath>
+#include <cstdlib>
 
-class BitcoinExchange {
-	private:
-		std::map<std::string, float> DateValueStorage;
-	public:
-		BitcoinExchange(void);
-		~BitcoinExchange(void);
-		BitcoinExchange(BitcoinExchange const &copy);
 
-		BitcoinExchange operator=(BitcoinExchange const &copy);
-		//getter
-		std::map<std::string, float> getInput(void) const;
-		//setter
-		void	setInput(std::string date, float value);
+class BitCoin 
+{
+    private:
+            std::map <std::string, float> data;
+
+    public:
+            BitCoin();
+            BitCoin(BitCoin const &copy);
+            ~BitCoin();
+            BitCoin& operator=(BitCoin const &src);
+
+            class openFileException : public std::exception 
+            {
+                public:
+                    const char * what() const throw();
+            };
+
+            void takeInput(std::string const &path);
 };
-
-#endif
